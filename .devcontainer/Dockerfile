@@ -2,12 +2,11 @@ FROM mcr.microsoft.com/devcontainers/universal:2-linux
 
 # Install the xz-utils package
 RUN apt-get update && \
-    apt-get install -y xz-utils gnupg && \
-    apt-get clean
+    apt-get install -y xz-utils && \
+    pip install django
 
-RUN wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add - && \
-    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+# Install MongoDB
+RUN apt-get install -y mongodb
 
-# Install the xz-utils package
-RUN apt-get update && \
-pip install django
+# MongoDB port
+EXPOSE 27017
